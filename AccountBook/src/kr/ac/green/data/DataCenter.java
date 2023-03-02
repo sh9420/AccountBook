@@ -227,6 +227,9 @@ public class DataCenter {
 		if(size % PER_PAGE !=0) {
 			count++;
 		}
+		if(count == 0) {
+			count = 1;
+		}
 		return count;
 	}
 }

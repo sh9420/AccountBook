@@ -165,7 +165,6 @@ public class MainForm extends JFrame{
 	}
 
 	public void setDisplay() {
-		setPages();
 		pnlSouth = new JPanel(new GridLayout(0,1));
 		JPanel pnlNorth = new JPanel(new GridLayout(0, 1));
 
@@ -207,7 +206,8 @@ public class MainForm extends JFrame{
 	}
 	
 	private void paginate() {
-		
+		pageNo = 1;
+		setPages();
 		JPanel pnlSSouth = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JPanel pnlSNorth = new JPanel();
 		pnlSNorth.add(btnPre);
@@ -532,16 +532,22 @@ public class MainForm extends JFrame{
 		pnlCNorth.updateUI();
 	}
 	private void setPages() {
-		cBox.removeAllItems();
+		int cBoxCnt = cBox.getItemCount();
+		
+		for(int idx = 2; idx <= cBoxCnt; idx ++) {
+			cBox.removeItem(idx+"");
+		}
+		
 		int count = dataCenter.getTotalPageCount();
+		
 		for(int i = 1; i <= count ; i++) {
-			cBox.addItem(String.valueOf(i));
+			if ( !(i == 1 && cBoxCnt > 0)) {
+				cBox.addItem(String.valueOf(i));
+			}
 		}
 	}
 	
 	public void allupadte() {
-		dataCenter.getListTable().clear();
-		pnlSouth.removeAll();
 		paginate();
 		addTable();
 		updatePanel();
